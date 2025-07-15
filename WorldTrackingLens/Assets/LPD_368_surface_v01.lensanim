@@ -1,0 +1,965 @@
+{
+
+"images": [
+    "LPD_368_surface_v01.png"
+],
+
+"frames": [
+{
+    "name": "LPD_368_surface_v01_00.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 3,
+        "width": 145,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 4,
+        "top": 29,
+        "right": 149,
+        "bottom": 180
+    }
+},{
+    "name": "LPD_368_surface_v01_01.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 152,
+        "y": 3,
+        "width": 146,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 4,
+        "top": 28,
+        "right": 150,
+        "bottom": 179
+    }
+},{
+    "name": "LPD_368_surface_v01_02.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 302,
+        "y": 3,
+        "width": 148,
+        "height": 150
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 4,
+        "top": 27,
+        "right": 152,
+        "bottom": 177
+    }
+},{
+    "name": "LPD_368_surface_v01_03.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 454,
+        "y": 3,
+        "width": 149,
+        "height": 149
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 5,
+        "top": 27,
+        "right": 154,
+        "bottom": 176
+    }
+},{
+    "name": "LPD_368_surface_v01_04.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 607,
+        "y": 3,
+        "width": 143,
+        "height": 146
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 13,
+        "top": 27,
+        "right": 156,
+        "bottom": 173
+    }
+},{
+    "name": "LPD_368_surface_v01_05.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 754,
+        "y": 3,
+        "width": 135,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 22,
+        "top": 20,
+        "right": 157,
+        "bottom": 171
+    }
+},{
+    "name": "LPD_368_surface_v01_06.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 158,
+        "width": 134,
+        "height": 160
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 24,
+        "top": 10,
+        "right": 158,
+        "bottom": 170
+    }
+},{
+    "name": "LPD_368_surface_v01_07.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 141,
+        "y": 158,
+        "width": 126,
+        "height": 159
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 32,
+        "top": 10,
+        "right": 158,
+        "bottom": 169
+    }
+},{
+    "name": "LPD_368_surface_v01_08.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 271,
+        "y": 158,
+        "width": 115,
+        "height": 166
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 42,
+        "top": 1,
+        "right": 157,
+        "bottom": 167
+    }
+},{
+    "name": "LPD_368_surface_v01_09.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 390,
+        "y": 158,
+        "width": 105,
+        "height": 166
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 51,
+        "top": 1,
+        "right": 156,
+        "bottom": 167
+    }
+},{
+    "name": "LPD_368_surface_v01_10.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 499,
+        "y": 158,
+        "width": 94,
+        "height": 166
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 61,
+        "top": 1,
+        "right": 155,
+        "bottom": 167
+    }
+},{
+    "name": "LPD_368_surface_v01_11.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 597,
+        "y": 158,
+        "width": 94,
+        "height": 167
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 67,
+        "top": 1,
+        "right": 161,
+        "bottom": 168
+    }
+},{
+    "name": "LPD_368_surface_v01_12.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 695,
+        "y": 158,
+        "width": 111,
+        "height": 169
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 67,
+        "top": 1,
+        "right": 178,
+        "bottom": 170
+    }
+},{
+    "name": "LPD_368_surface_v01_13.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 810,
+        "y": 158,
+        "width": 111,
+        "height": 162
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 68,
+        "top": 9,
+        "right": 179,
+        "bottom": 171
+    }
+},{
+    "name": "LPD_368_surface_v01_14.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 331,
+        "width": 121,
+        "height": 163
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 68,
+        "top": 10,
+        "right": 189,
+        "bottom": 173
+    }
+},{
+    "name": "LPD_368_surface_v01_15.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 128,
+        "y": 331,
+        "width": 127,
+        "height": 155
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 70,
+        "top": 19,
+        "right": 197,
+        "bottom": 174
+    }
+},{
+    "name": "LPD_368_surface_v01_16.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 259,
+        "y": 331,
+        "width": 135,
+        "height": 149
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 72,
+        "top": 27,
+        "right": 207,
+        "bottom": 176
+    }
+},{
+    "name": "LPD_368_surface_v01_17.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 398,
+        "y": 331,
+        "width": 134,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 73,
+        "top": 27,
+        "right": 207,
+        "bottom": 178
+    }
+},{
+    "name": "LPD_368_surface_v01_18.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 536,
+        "y": 331,
+        "width": 141,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 75,
+        "top": 28,
+        "right": 216,
+        "bottom": 179
+    }
+},{
+    "name": "LPD_368_surface_v01_19.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 681,
+        "y": 331,
+        "width": 140,
+        "height": 152
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 76,
+        "top": 28,
+        "right": 216,
+        "bottom": 180
+    }
+},{
+    "name": "LPD_368_surface_v01_20.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 825,
+        "y": 331,
+        "width": 142,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 74,
+        "top": 30,
+        "right": 216,
+        "bottom": 181
+    }
+},{
+    "name": "LPD_368_surface_v01_21.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 498,
+        "width": 143,
+        "height": 150
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 73,
+        "top": 32,
+        "right": 216,
+        "bottom": 182
+    }
+},{
+    "name": "LPD_368_surface_v01_22.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 150,
+        "y": 498,
+        "width": 144,
+        "height": 149
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 72,
+        "top": 33,
+        "right": 216,
+        "bottom": 182
+    }
+},{
+    "name": "LPD_368_surface_v01_23.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 298,
+        "y": 498,
+        "width": 145,
+        "height": 150
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 70,
+        "top": 34,
+        "right": 215,
+        "bottom": 184
+    }
+},{
+    "name": "LPD_368_surface_v01_24.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 447,
+        "y": 498,
+        "width": 139,
+        "height": 157
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 68,
+        "top": 37,
+        "right": 207,
+        "bottom": 194
+    }
+},{
+    "name": "LPD_368_surface_v01_25.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 590,
+        "y": 498,
+        "width": 138,
+        "height": 157
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 68,
+        "top": 38,
+        "right": 206,
+        "bottom": 195
+    }
+},{
+    "name": "LPD_368_surface_v01_26.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 732,
+        "y": 498,
+        "width": 130,
+        "height": 165
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 67,
+        "top": 39,
+        "right": 197,
+        "bottom": 204
+    }
+},{
+    "name": "LPD_368_surface_v01_27.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 667,
+        "width": 121,
+        "height": 173
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 67,
+        "top": 40,
+        "right": 188,
+        "bottom": 213
+    }
+},{
+    "name": "LPD_368_surface_v01_28.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 128,
+        "y": 667,
+        "width": 111,
+        "height": 172
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 68,
+        "top": 42,
+        "right": 179,
+        "bottom": 214
+    }
+},{
+    "name": "LPD_368_surface_v01_29.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 243,
+        "y": 667,
+        "width": 101,
+        "height": 180
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 69,
+        "top": 42,
+        "right": 170,
+        "bottom": 222
+    }
+},{
+    "name": "LPD_368_surface_v01_30.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 348,
+        "y": 667,
+        "width": 91,
+        "height": 180
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 69,
+        "top": 42,
+        "right": 160,
+        "bottom": 222
+    }
+},{
+    "name": "LPD_368_surface_v01_31.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 443,
+        "y": 667,
+        "width": 97,
+        "height": 180
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 60,
+        "top": 42,
+        "right": 157,
+        "bottom": 222
+    }
+},{
+    "name": "LPD_368_surface_v01_32.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 544,
+        "y": 667,
+        "width": 108,
+        "height": 182
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 50,
+        "top": 40,
+        "right": 158,
+        "bottom": 222
+    }
+},{
+    "name": "LPD_368_surface_v01_33.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 656,
+        "y": 667,
+        "width": 117,
+        "height": 175
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 41,
+        "top": 39,
+        "right": 158,
+        "bottom": 214
+    }
+},{
+    "name": "LPD_368_surface_v01_34.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 777,
+        "y": 667,
+        "width": 126,
+        "height": 174
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 31,
+        "top": 38,
+        "right": 157,
+        "bottom": 212
+    }
+},{
+    "name": "LPD_368_surface_v01_35.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 3,
+        "y": 853,
+        "width": 134,
+        "height": 167
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 23,
+        "top": 37,
+        "right": 157,
+        "bottom": 204
+    }
+},{
+    "name": "LPD_368_surface_v01_36.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 141,
+        "y": 853,
+        "width": 141,
+        "height": 161
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 14,
+        "top": 34,
+        "right": 155,
+        "bottom": 195
+    }
+},{
+    "name": "LPD_368_surface_v01_37.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 286,
+        "y": 853,
+        "width": 141,
+        "height": 160
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 13,
+        "top": 33,
+        "right": 154,
+        "bottom": 193
+    }
+},{
+    "name": "LPD_368_surface_v01_38.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 431,
+        "y": 853,
+        "width": 148,
+        "height": 150
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 4,
+        "top": 32,
+        "right": 152,
+        "bottom": 182
+    }
+},{
+    "name": "LPD_368_surface_v01_39.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 583,
+        "y": 853,
+        "width": 147,
+        "height": 150
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 4,
+        "top": 31,
+        "right": 151,
+        "bottom": 181
+    }
+},{
+    "name": "LPD_368_surface_v01_40.png",
+    "texture": 0,
+    "samplingRect": {
+        "objectName": "",
+        "x": 734,
+        "y": 853,
+        "width": 145,
+        "height": 151
+    },
+    "rotated": false,
+    "trimmed": true,
+    "sourceSize": {
+        "objectName": "",
+        "width": 228,
+        "height": 228
+    },
+    "clipping": {
+        "left": 4,
+        "top": 29,
+        "right": 149,
+        "bottom": 180
+    }
+}
+],
+
+"animations": {
+    "LPD_368_surface_v01": { "frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40] }
+},
+
+"meta": {
+        "app": "http://www.codeandweb.com/texturepacker",
+        "description": "Json file for Lens Studio Framework",
+        "version": "1.0",
+        "smartupdate": "$TexturePacker:SmartUpdate:34eb07e11a305d88fdc5094bda99a8b4:b9e1f3fb4e7a21297676654b8c632c81:db5563a58a486953e4f99bf8d6dec0a4$"
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for Lens Studio"
+    }
+}

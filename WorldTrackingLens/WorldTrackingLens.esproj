@@ -1,0 +1,54 @@
+studioVersion:
+  major: 5
+  minor: 11
+  patch: 0
+  build: 25062600
+  type: Public
+coreVersion: 317
+clientVersion: 13.460000
+updateCheckpoint: 64
+sceneId: 0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99
+viewConfig:
+  simulation:
+    device: iPhone 13 Pro
+    cameraFov: 43.206001
+    fullFrameAspect: 0.562500
+    resolutionScale: 1.000000
+    viewport: Maximized
+    output: Live
+    stereoOutputEye: Center
+    deviceTypeOverride: Unknown
+    tint: true
+  cameraType: Back
+metaInfo:
+  hints:
+    []
+  tags:
+    []
+  lensName: PandaWorldTracking
+  lensDescriptors:
+    - GEN_AI_ICON
+  lensApplicability:
+    - Front
+    - Back
+  lensClientCompatibilities:
+    - Mobile
+    - Web
+  platformBundlesEnabled: false
+  iconHash: d3b544b47a634a861d8279f1693ae47a
+  videoPreviewHash: ""
+  fromTemplateName: Default
+  fromTemplateUrl: Lens Studio 5.11.0.25062600
+  activationCamera: Front
+  sourceMapEnabled: false
+  usingMinClientVersions: false
+  androidMinClientVersion:
+    major: 0
+    minor: 0
+    patch: 0
+    build: 0
+  iOSMinClientVersion:
+    major: 0
+    minor: 0
+    patch: 0
+    build: 0
