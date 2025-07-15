@@ -28,10 +28,10 @@ const liveRenderTarget = document.getElementById(
 ) as HTMLCanvasElement;
 
 async function init() {
-    const cameraKit = await bootstrapCameraKit({ apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzQxMDQ0ODA4LCJzdWIiOiI0NjMxNGUxOS0zZTcyLTQ2NjgtOThlYS1lMjgwNDVkMmViMzF-U1RBR0lOR35mMzYwMTJkYS1hNjIzLTRjZTAtYjIwYy0wOWNkNjNmZjg3ZWQifQ.vlAP08SoYL16GcZP0H232IbKcnndH9zUbgGfc2_NrTc' });
+    const cameraKit = await bootstrapCameraKit({ apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzUyNDkyMzM3LCJzdWIiOiJlMDA1YTEzMy1jNmNlLTRmNmUtYjMyMC05YTNkYzVjOTRlZTN-U1RBR0lOR35mZjZkOGU3OC0xZWYzLTQ3ZWUtOGY0ZC1lM2Y5MDZjOTZlZTEifQ.yf7OFtk9dhdjq8FsmXghKNea_7GMoBF01AGEpTVj6ZY' });
     const session = await cameraKit.createSession({ liveRenderTarget });
     const { lenses } = await cameraKit.lensRepository.loadLensGroups([
-        '89262b19-4dec-4758-a8c7-7c8e03d429c1'
+        'c352182f-89be-4007-b24c-8fcf50c56d56'
     ]);
 
     session.applyLens(lenses[0]);
