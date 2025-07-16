@@ -1,31 +1,17 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, orientation=portrait">
   <title>World Tracking Demo</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <!-- Camera & Lens Selectors -->
-  <div class="top-controls">
-    <select id="cameras"></select>
-    <select id="lenses"></select>
-  </div>
   <!-- Canvas & Video Preview -->
-  <div class="main-container">
     <canvas id="canvas"></canvas>
     <section id="video-container" style="display: none">
       <video loop controls autoplay id="video"></video>
-      <div>
-        <button id="download">Download Video</button>
-      </div>
     </section>
-  </div>
-  <section class="controls">
-    <button id="start">Start Recording</button>
-    <button id="stop" disabled>Stop Recording</button>
-  </section>
-
   <script type="module" src="/src/main.ts"></script>
 </body>
 
