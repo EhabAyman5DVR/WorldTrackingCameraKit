@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob:">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>MDN Audio Recorder Minimal Demo</title>
   <style>
-    body { font-family: sans-serif; padding: 2em; }
-    button { font-size: 1.2em; padding: 0.5em 1em; }
-    audio { display: block; margin-top: 1em; width: 100%; }
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+    }
+
+    button {
+      font-size: 1.2em;
+      padding: 0.5em 1em;
+    }
+
+    audio {
+      display: block;
+      margin-top: 1em;
+      width: 100%;
+    }
   </style>
 </head>
+
 <body>
   <button id="record">Record</button>
   <button id="stop" disabled>Stop</button>
@@ -54,4 +70,5 @@
     };
   </script>
 </body>
+
 </html>
