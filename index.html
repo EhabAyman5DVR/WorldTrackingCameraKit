@@ -3,13 +3,15 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, orientation=portrait">
   <title>World Tracking Demo</title>
-  <script type="module" crossorigin src="/WorldTrackingCameraKit/assets/index-DcOSozuX.js"></script>
+  <script type="module" crossorigin src="/WorldTrackingCameraKit/assets/index-FyJ3JGSp.js"></script>
   <link rel="stylesheet" crossorigin href="/WorldTrackingCameraKit/assets/index-BTDHea_0.css">
 </head>
 
 <body>
   <!-- Canvas & Video Preview -->
     <canvas id="canvas" class="fullscreen"></canvas>
+    <button id="record-btn" style="position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:10;padding:16px 32px;font-size:18px;border-radius:24px;background:#ff5555;color:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,0.2);">Hold to Record</button>
+    <audio id="audio-playback" controls style="display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:10;"></audio>
     <section id="video-container" style="display: none">
       <video loop controls autoplay id="video"></video>
     </section>
