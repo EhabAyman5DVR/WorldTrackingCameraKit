@@ -1,20 +1,57 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, orientation=portrait">
-  <title>World Tracking Demo</title>
-  <script type="module" crossorigin src="/WorldTrackingCameraKit/assets/index-CSsGf5BB.js"></script>
-  <link rel="stylesheet" crossorigin href="/WorldTrackingCameraKit/assets/index-BTDHea_0.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDN Audio Recorder Minimal Demo</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; }
+    button { font-size: 1.2em; padding: 0.5em 1em; }
+    audio { display: block; margin-top: 1em; width: 100%; }
+  </style>
 </head>
-
 <body>
-  <!-- Canvas & Video Preview -->
-    <canvas id="canvas" class="fullscreen"></canvas>
-    <button id="record-btn" style="position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:10;padding:16px 32px;font-size:18px;border-radius:24px;background:#ff5555;color:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,0.2);">Hold to Record</button>
-    <audio id="audio-playback" controls style="display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:10;"></audio>
-    <section id="video-container" style="display: none">
-      <video loop controls autoplay id="video"></video>
-    </section>
-</body>
+  <button id="record">Record</button>
+  <button id="stop" disabled>Stop</button>
+  <audio id="audio" controls></audio>
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let stream;
+    const recordBtn = document.getElementById('record');
+    const stopBtn = document.getElementById('stop');
+    const audio = document.getElementById('audio');
 
+    recordBtn.onclick = async () => {
+      if (!stream) {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        } catch (err) {
+          alert('Microphone access denied');
+          return;
+        }
+      }
+      audioChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+      };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(audioChunks);
+        audio.src = URL.createObjectURL(blob);
+      };
+      mediaRecorder.start();
+      recordBtn.disabled = true;
+      stopBtn.disabled = false;
+    };
+
+    stopBtn.onclick = () => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        recordBtn.disabled = false;
+        stopBtn.disabled = true;
+      }
+    };
+  </script>
+</body>
 </html>
