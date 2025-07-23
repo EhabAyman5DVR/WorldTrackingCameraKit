@@ -10,6 +10,7 @@
     "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "eslint-plugin-erasable-syntax-only": "^0.3.1",
     "gh-pages": "^6.3.0",
     "typescript": "~5.8.3",
     "vite": "^7.0.4"
