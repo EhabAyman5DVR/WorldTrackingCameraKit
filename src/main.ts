@@ -75,6 +75,104 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+// --- WAV encoding helper ---
+function encodeWAV(audioBuffer: AudioBuffer): Blob {
+  const numChannels = audioBuffer.numberOfChannels;
+  const sampleRate = audioBuffer.sampleRate;
+  const format = 1; // PCM
+  const bitDepth = 16;
+
+  // Interleave channels
+  let interleaved;
+  if (numChannels === 2) {
+    const left = audioBuffer.getChannelData(0);
+    const right = audioBuffer.getChannelData(1);
+    interleaved = new Float32Array(left.length + right.length);
+    for (let i = 0, j = 0; i < left.length; i++, j += 2) {
+      interleaved[j] = left[i];
+      interleaved[j + 1] = right[i];
+    }
+  } else {
+    interleaved = audioBuffer.getChannelData(0);
+  }
+
+  // Convert float audio data to 16-bit PCM
+  const buffer = new ArrayBuffer(44 + interleaved.length * 2);
+  const view = new DataView(buffer);
+
+  // Write WAV header
+  function writeString(view: DataView, offset: number, str: string) {
+    for (let i = 0; i < str.length; i++) {
+      view.setUint8(offset + i, str.charCodeAt(i));
+    }
+  }
+
+  writeString(view, 0, 'RIFF');
+  view.setUint32(4, 36 + interleaved.length * 2, true);
+  writeString(view, 8, 'WAVE');
+  writeString(view, 12, 'fmt ');
+  view.setUint32(16, 16, true); // Subchunk1Size
+  view.setUint16(20, format, true); // AudioFormat
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * numChannels * bitDepth / 8, true);
+  view.setUint16(32, numChannels * bitDepth / 8, true);
+  view.setUint16(34, bitDepth, true);
+  writeString(view, 36, 'data');
+  view.setUint32(40, interleaved.length * 2, true);
+
+  // Write PCM samples
+  let offset = 44;
+  for (let i = 0; i < interleaved.length; i++, offset += 2) {
+    let s = Math.max(-1, Math.min(1, interleaved[i]));
+    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+  }
+
+  return new Blob([buffer], { type: 'audio/wav' });
+}
+
+// --- Silence trimming helper ---
+function trimTrailingSilence(samples: Float32Array, threshold = 0.0001): Float32Array {
+  let endIndex = samples.length - 1;
+  while (endIndex > 0) {
+    if (Math.abs(samples[endIndex]) > threshold) break;
+    endIndex--;
+  }
+  return samples.slice(0, endIndex + 1);
+}
+
+// --- Downmix and resample helper ---
+async function downmixAndResampleToMono(audioBuffer: AudioBuffer, targetSampleRate = 44100): Promise<AudioBuffer> {
+  // Downmix to mono
+  const length = audioBuffer.length;
+  const mono = new Float32Array(length);
+  if (audioBuffer.numberOfChannels === 1) {
+    audioBuffer.copyFromChannel(mono, 0);
+  } else {
+    const left = audioBuffer.getChannelData(0);
+    const right = audioBuffer.getChannelData(1);
+    for (let i = 0; i < length; i++) {
+      mono[i] = (left[i] + right[i]) / 2;
+    }
+  }
+  // Resample using OfflineAudioContext
+  const offlineCtx = new OfflineAudioContext(1, Math.ceil(audioBuffer.duration * targetSampleRate), targetSampleRate);
+  const buffer = offlineCtx.createBuffer(1, mono.length, audioBuffer.sampleRate);
+  buffer.copyToChannel(mono, 0);
+  const source = offlineCtx.createBufferSource();
+  source.buffer = buffer;
+  source.connect(offlineCtx.destination);
+  source.start();
+  const renderedBuffer = await offlineCtx.startRendering();
+  // Trim trailing silence from the mono channel
+  const renderedMono = renderedBuffer.getChannelData(0);
+  const trimmedMono = trimTrailingSilence(renderedMono);
+  // Create a new AudioBuffer with trimmed data
+  const trimmedBuffer = new OfflineAudioContext(1, trimmedMono.length, renderedBuffer.sampleRate).createBuffer(1, trimmedMono.length, renderedBuffer.sampleRate);
+  trimmedBuffer.copyToChannel(trimmedMono, 0);
+  return trimmedBuffer;
+}
+
 if (recordBtn && downloadLink) {
   recordBtn.addEventListener('mousedown', startRecording);
   recordBtn.addEventListener('touchstart', startRecording);
@@ -91,28 +189,67 @@ if (recordBtn && downloadLink) {
     }
     if (mediaRecorder && mediaRecorder.state === 'recording') return;
     audioChunks = [];
-    mediaRecorder = new MediaRecorder(micStream);
+    
+    // Set specific options for MediaRecorder
+    const options = { 
+      mimeType: 'audio/webm;codecs=opus',
+      audioBitsPerSecond: 128000
+    };
+    
+    try {
+      mediaRecorder = new MediaRecorder(micStream, options);
+      console.log('MediaRecorder created with options:', options);
+    } catch (e) {
+      console.log('Failed to create MediaRecorder with these options, falling back to defaults');
+      mediaRecorder = new MediaRecorder(micStream);
+    }
+    
     mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) audioChunks.push(event.data);
+      if (event.data.size > 0) {
+        console.log(`Received audio chunk of size: ${event.data.size} bytes`);
+        audioChunks.push(event.data);
+      }
     };
     mediaRecorder.onstop = async () => {
       try {
-     //   const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-        const loginResponse = await aiService.login('developer@5d-vr.com', 'Dev$&PassAI2654');
-        console.log(loginResponse)
-       // const response = await aiService.processAudioMessage(audioBlob);
-
-        // Play the response audio
-        //const audio = new Audio(response.audioUrl);
-
-        // Send viseme data to the lens for lip-sync
-        // currentSession.lens.executeScript(`startLipsync(${JSON.stringify(response.visemeData)})`);
-
-        // Play the audio
-       // await audio.play();
+        if (!mediaRecorder) {
+          throw new Error('MediaRecorder is not initialized');
+        }
+        // Get the MIME type from the recorder
+        const mimeType = mediaRecorder.mimeType || 'audio/webm;codecs=opus';
+        console.log('MediaRecorder MIME type:', mimeType);
+        // Log the audio chunks we've collected
+        console.log(`Number of audio chunks: ${audioChunks.length}`);
+        console.log('Audio chunks:', audioChunks);
+        // Create blob for both download and transcription
+        const audioBlob = new Blob(audioChunks, { type: mimeType });
+        console.log(`Total audio blob size: ${audioBlob.size} bytes`);
+        // Convert recorded audio to mono, resample to 44100 Hz, and encode as WAV
+        aiService.setLanguage('en');
+        const arrayBuffer = await audioBlob.arrayBuffer();
+        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        const monoResampledBuffer = await downmixAndResampleToMono(audioBuffer, 44100);
+        const wavBlob = encodeWAV(monoResampledBuffer);
+        // Set up download link for WAV file
+        const wavDownloadUrl = URL.createObjectURL(wavBlob);
+        downloadLink!.href = wavDownloadUrl;
+        downloadLink!.download = 'recorded_audio.wav';
+        downloadLink!.style.display = 'block';
+        // Verify the blob content
+        const reader = new FileReader();
+        reader.onload = () => console.log('WAV audio data verification:', reader.result ? 'Data present' : 'No data');
+        reader.readAsArrayBuffer(wavBlob);
+        // Transcribe
+        const transcription = await aiService.transcribeAudio(wavBlob);
+        console.log('Transcription:', transcription);
       } catch (error) {
         console.error('Failed to process audio:', error);
-        alert('Error processing audio. Please try again.');
+        if (error instanceof Error) {
+          alert(`Error processing audio: ${error.message}`);
+        } else {
+          alert('Error processing audio. Please try again.');
+        }
       }
     };
     mediaRecorder.start();

@@ -77,12 +77,12 @@ class AIService {
       });
 
       const data = await this.handleResponse<LoginResponse>(response);
-      
+
       // Save token with 30-minute expiry
       const expiryTime = new Date();
       expiryTime.setMinutes(expiryTime.getMinutes() + 30);
       this.saveToken(data.token, expiryTime);
-      
+
       console.log('Login successful. Token cached.');
       return data;
     } catch (error) {
@@ -92,17 +92,17 @@ class AIService {
   }
 
   // Add authorization header to requests
-//   private getHeaders(): HeadersInit {
-//     const headers: HeadersInit = {
-//       'Content-Type': 'application/json'
-//     };
-    
-//     if (this.token) {
-//       headers['Authorization'] = `Bearer ${this.token}`;
-//     }
-    
-//     return headers;
-//   }
+  //   private getHeaders(): HeadersInit {
+  //     const headers: HeadersInit = {
+  //       'Content-Type': 'application/json'
+  //     };
+
+  //     if (this.token) {
+  //       headers['Authorization'] = `Bearer ${this.token}`;
+  //     }
+
+  //     return headers;
+  //   }
 
   private async handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
@@ -115,25 +115,84 @@ class AIService {
     return await response.json();
   }
 
+  // Language settings
+  private lang: string = 'en'; // Default language
+  private langForGoogleASR: string = 'en-US'; // Default ASR language
+
+  // Set language for transcription
+  setLanguage(language: 'en' | 'ar'): void {
+    this.lang = language;
+    switch (language) {
+      case 'en':
+        this.langForGoogleASR = 'en-US'; // English
+        break;
+      case 'ar':
+        this.langForGoogleASR = 'ar-XA'; // Arabic
+        break;
+      default:
+        console.error('Invalid language code selected.');
+        throw new APIError('Invalid language code', 400);
+    }
+  }
+
   async transcribeAudio(audioBlob: Blob): Promise<string> {
     try {
       if (!this.isTokenValid()) {
         throw new APIError('Not authenticated', 401);
       }
 
+      // Create form data with language and audio
       const formData = new FormData();
-      formData.append('audio', audioBlob);
-
-      const response = await fetch(`${this.BASE_URL}/transcribe`, {
+      formData.append('language', this.langForGoogleASR);
+      formData.append('audio', audioBlob, 'audio.wav');
+      const response = await fetch(`${this.BASE_URL}/asr-google`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${this.token}` },
+        headers: {
+          'Authorization': `Bearer ${this.token}`,
+          'Accept': 'application/json'
+        },
         body: formData
       });
+      console.log(response)
+      // Get the raw text response
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
 
-      const data = await this.handleResponse<{ text: string }>(response);
-      return data.text;
+      // Try to parse as JSON first
+      let transcriptionText: string;
+      try {
+        const data = JSON.parse(responseText);
+        transcriptionText = data.text || responseText;
+      } catch {
+        // If not JSON, use the raw text
+        transcriptionText = responseText;
+      }
+
+      if (!transcriptionText || transcriptionText.trim() === '') {
+        // Handle empty transcription with language-specific messages
+        const errorMessage = this.lang === 'ar'
+          ? 'عذرا لم استطع سماعك تاكد من ان الميكروفون يعمل جيدا'
+          : 'Sorry, I cannot hear you well. Please check your microphone.';
+
+        throw new APIError(errorMessage, 400);
+      }
+
+      console.log('Transcription successful:', transcriptionText);
+      return transcriptionText;
+
     } catch (error) {
       console.error('Transcription error:', error);
+
+      // Handle errors with language-specific messages
+      const errorMessage = this.lang === 'ar'
+        ? 'عذرا لم استطع سماعك تاكد من ان الميكروفون يعمل جيدا'
+        : 'Sorry, I cannot hear you well. Please check your microphone.';
+
+      // If it's not already an APIError, create one
+      if (!(error instanceof APIError)) {
+        throw new APIError(errorMessage, 500);
+      }
+
       throw error;
     }
   }
@@ -189,15 +248,15 @@ class AIService {
       // 1. Convert audio to text
       const transcribedText = await this.transcribeAudio(audioBlob);
       console.log('Transcribed text:', transcribedText);
-      
+
       // 2. Get GPT response
       const gptResponse = await this.getGPTResponse(transcribedText);
       console.log('GPT response:', gptResponse);
-      
+
       // 3. Generate speech and visemes
       const aiResponse = await this.generateSpeech(gptResponse);
       console.log('Generated speech and visemes:', aiResponse);
-      
+
       return aiResponse;
     } catch (error) {
       console.error('Processing error:', error);
