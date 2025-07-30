@@ -173,6 +173,20 @@ async function downmixAndResampleToMono(audioBuffer: AudioBuffer, targetSampleRa
   return trimmedBuffer;
 }
 
+// --- Typewriter effect helper ---
+function typewriterEffect(element: HTMLElement, text: string, speed = 40) {
+  element.textContent = '';
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+
 if (recordBtn && downloadLink) {
   recordBtn.addEventListener('mousedown', startRecording);
   recordBtn.addEventListener('touchstart', startRecording);
@@ -243,6 +257,11 @@ if (recordBtn && downloadLink) {
         // Transcribe
         const transcription = await aiService.transcribeAudio(wavBlob);
         console.log('Transcription:', transcription);
+        // Display transcription with typewriter effect
+        const transcriptionContainer = document.getElementById('transcription-text');
+        if (transcriptionContainer) {
+          typewriterEffect(transcriptionContainer, transcription);
+        }
       } catch (error) {
         console.error('Failed to process audio:', error);
         if (error instanceof Error) {
