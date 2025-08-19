@@ -27,6 +27,14 @@ export interface LoginResponse {
   version: string;
 }
 
+export interface GPTRequest {
+  transcription: string;
+  model?: string;
+  backstory?: string;
+  temperature?: number;
+  maxTokens?: number;
+}
+
 class AIService {
   private readonly BASE_URL = 'https://www.5d-ai-hub.com/api';
   private token: string | null = null;
@@ -239,6 +247,56 @@ class AIService {
     } catch (error) {
       console.error('TTS error:', error);
       throw error;
+    }
+  }
+
+  async sendTranscriptionToGPT(
+    transcription: string,
+    options?: {
+      model?: string;
+      backstory?: string;
+      temperature?: number;
+      maxTokens?: number;
+    }
+  ): Promise<string> {
+    try {
+      if (!this.isTokenValid()) {
+        throw  new APIError('Not authenticated', 401);
+      }
+
+      const gptUrl = `${this.BASE_URL}/gpt`;
+      console.log('Sending transcription to GPT:', transcription);
+
+      const gptRequestPayload: GPTRequest = {
+        transcription: transcription,
+        ...options
+      };
+
+      const response = await fetch(gptUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        },
+        body: JSON.stringify(gptRequestPayload)
+      });
+
+      // Directly get the text response as the backend sends plain text
+      const responseText = await response.text();
+      console.log('GPT Raw Response:', responseText);
+
+      if (!response.ok) {
+        throw new APIError(responseText || `HTTP error! status: ${response.status}`, response.status);
+      }
+
+      return responseText;
+    } catch (error) {
+      console.error('Failed to send transcription to GPT:', error);
+      if (error instanceof APIError) {
+        throw error;
+      } else {
+        throw new APIError(`Failed to process GPT request: ${(error as Error).message}`, 500);
+      }
     }
   }
 

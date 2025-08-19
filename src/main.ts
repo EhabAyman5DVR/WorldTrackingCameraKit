@@ -257,6 +257,16 @@ if (recordBtn && downloadLink) {
         // Transcribe
         const transcription = await aiService.transcribeAudio(wavBlob);
         console.log('Transcription:', transcription);
+
+        // Send transcription to GPT
+        const gptResponse = await aiService.sendTranscriptionToGPT(transcription, {
+          model: "gpt-4o-mini", // Example: Add your desired model
+          backstory: "your AI backstory here", // Example: Add your AI backstory
+          temperature: 0.7, // Example: Add desired temperature
+          maxTokens: 150 // Example: Add desired max tokens
+        });
+        console.log('GPT Response:', gptResponse);
+
         // Display transcription with typewriter effect
         const transcriptionContainer = document.getElementById('transcription-text');
         if (transcriptionContainer) {
