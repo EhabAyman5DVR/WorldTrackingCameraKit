@@ -122,7 +122,6 @@
 
 /* Controls: compact, elegant, docked near bottom */
 #record-btn,
-#download-link,
 #play-response-btn {
   position: relative;
   left: auto;
@@ -139,12 +138,6 @@
 #record-btn {
   background: #ff5555;
   color: #fff;
-}
-
-#download-link {
-  background: #4CAF50;
-  color: #fff;
-  text-decoration: none;
 }
 
 #play-response-btn {

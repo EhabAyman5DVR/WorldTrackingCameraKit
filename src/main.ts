@@ -63,7 +63,6 @@ let mediaRecorder: MediaRecorder | null = null;
 let audioChunks: BlobPart[] = [];
 
 const recordBtn = document.getElementById('record-btn') as HTMLButtonElement | null;
-const downloadLink = document.getElementById('download-link') as HTMLAnchorElement | null;
 const playResponseBtn = document.getElementById('play-response-btn') as HTMLButtonElement | null;
 
 // Store the last played audio URL
@@ -71,6 +70,7 @@ let lastAudioUrl: string = '';
 
 // Request mic access on page load and keep the stream
 window.addEventListener('DOMContentLoaded', async () => {
+  await loadBackstory();
   try {
     micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
     // Optionally, show a message or icon indicating mic is ready
@@ -210,7 +210,7 @@ async function loadBackstory() {
 // Call loadBackstory when the DOM is ready
 window.addEventListener('DOMContentLoaded', async () => {
   await loadBackstory();
-  if (recordBtn && downloadLink) {
+  if (recordBtn && playResponseBtn) {
     recordBtn.addEventListener('mousedown', startRecording);
     recordBtn.addEventListener('touchstart', startRecording);
     recordBtn.addEventListener('mouseup', stopRecording);
@@ -268,15 +268,6 @@ window.addEventListener('DOMContentLoaded', async () => {
           const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
           const monoResampledBuffer = await downmixAndResampleToMono(audioBuffer, 44100);
           const wavBlob = encodeWAV(monoResampledBuffer);
-          // Set up download link for WAV file
-          const wavDownloadUrl = URL.createObjectURL(wavBlob);
-          downloadLink!.href = wavDownloadUrl;
-          downloadLink!.download = 'recorded_audio.wav';
-          downloadLink!.style.display = 'block';
-          // Verify the blob content
-          const reader = new FileReader();
-          reader.onload = () => console.log('WAV audio data verification:', reader.result ? 'Data present' : 'No data');
-          reader.readAsArrayBuffer(wavBlob);
           // Transcribe
           const transcription = await aiService.transcribeAudio(wavBlob);
           console.log('Transcription:', transcription);
