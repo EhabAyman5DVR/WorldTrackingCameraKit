@@ -267,6 +267,16 @@ if (recordBtn && downloadLink) {
         });
         console.log('GPT Response:', gptResponse);
 
+        // Generate speech from GPT response using OpenAI TTS
+        const mp3Url = await aiService.generateTTSUsingOpenAI(gptResponse, 'alloy'); // You can change 'alloy' to another voice like 'shimmer', 'nova', etc.
+        console.log('Generated .mp3 URL from OpenAI:', mp3Url);
+
+        // Play the audio
+        if (mp3Url) {
+          const audio = new Audio(mp3Url);
+          audio.play();
+        }
+
         // Display transcription with typewriter effect
         const transcriptionContainer = document.getElementById('transcription-text');
         if (transcriptionContainer) {

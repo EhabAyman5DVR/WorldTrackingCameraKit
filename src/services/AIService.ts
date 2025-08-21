@@ -35,6 +35,11 @@ export interface GPTRequest {
   maxTokens?: number;
 }
 
+export interface TTSRequestOpenAI {
+  text: string;
+  voice: string; // e.g., 'alloy', 'shimmer', etc.
+}
+
 class AIService {
   private readonly BASE_URL = 'https://www.5d-ai-hub.com/api';
   private token: string | null = null;
@@ -140,6 +145,47 @@ class AIService {
       default:
         console.error('Invalid language code selected.');
         throw new APIError('Invalid language code', 400);
+    }
+  }
+
+  async generateTTSUsingOpenAI(text: string, voice: string = 'alloy'): Promise<string> {
+    try {
+      if (!this.isTokenValid()) {
+        throw new APIError('Not authenticated', 401);
+      }
+
+      const ttsUrl = `${this.BASE_URL}/tts-open-ai`;
+      console.log('Sending text to OpenAI TTS:', text);
+
+      const ttsRequestPayload: TTSRequestOpenAI = {
+        text: text,
+        voice: voice
+      };
+
+      const response = await fetch(ttsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`
+        },
+        body: JSON.stringify(ttsRequestPayload)
+      });
+
+      const mp3Url = await response.text(); // Expecting plain URL as text
+      console.log('Received .mp3 URL from OpenAI:', mp3Url);
+
+      if (!response.ok) {
+        throw new APIError(mp3Url || `HTTP error! status: ${response.status}`, response.status);
+      }
+      
+      return mp3Url.trim().replace(/"/g, ''); // Clean up URL from potential quotes
+    } catch (error) {
+      console.error('OpenAI TTS error:', error);
+      if (error instanceof APIError) {
+        throw error;
+      } else {
+        throw new APIError(`Failed to process OpenAI TTS request: ${(error as Error).message}`, 500);
+      }
     }
   }
 
