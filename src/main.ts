@@ -64,6 +64,10 @@ let audioChunks: BlobPart[] = [];
 
 const recordBtn = document.getElementById('record-btn') as HTMLButtonElement | null;
 const downloadLink = document.getElementById('download-link') as HTMLAnchorElement | null;
+const playResponseBtn = document.getElementById('play-response-btn') as HTMLButtonElement | null;
+
+// Store the last played audio URL
+let lastAudioUrl: string = '';
 
 // Request mic access on page load and keep the stream
 window.addEventListener('DOMContentLoaded', async () => {
@@ -184,124 +188,167 @@ function typewriterEffect(element: HTMLElement, text: string, speed = 40) {
       setTimeout(type, speed);
     }
   }
-  type();
+  return type();
 }
 
-if (recordBtn && downloadLink) {
-  recordBtn.addEventListener('mousedown', startRecording);
-  recordBtn.addEventListener('touchstart', startRecording);
-  recordBtn.addEventListener('mouseup', stopRecording);
-  recordBtn.addEventListener('mouseleave', stopRecording);
-  recordBtn.addEventListener('touchend', stopRecording);
-  recordBtn.addEventListener('touchcancel', stopRecording);
+let aiBackstory: string = ""; // Variable to store the backstory content
 
-  function startRecording(e: Event) {
-    e.preventDefault();
-    if (!micStream) {
-      alert('Microphone not available.');
-      return;
+async function loadBackstory() {
+  try {
+    const response = await fetch('/WorldTrackingCameraKit/backstory.txt'); // Corrected path including base URL
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    if (mediaRecorder && mediaRecorder.state === 'recording') return;
-    audioChunks = [];
-    
-    // Set specific options for MediaRecorder
-    const options = { 
-      mimeType: 'audio/webm;codecs=opus',
-      audioBitsPerSecond: 128000
-    };
-    
-    try {
-      mediaRecorder = new MediaRecorder(micStream, options);
-      console.log('MediaRecorder created with options:', options);
-    } catch (e) {
-      console.log('Failed to create MediaRecorder with these options, falling back to defaults');
-      mediaRecorder = new MediaRecorder(micStream);
-    }
-    
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        console.log(`Received audio chunk of size: ${event.data.size} bytes`);
-        audioChunks.push(event.data);
+    aiBackstory = await response.text();
+    console.log('AI Backstory loaded successfully.');
+  } catch (error) {
+    console.error('Failed to load AI backstory:', error);
+    alert('Error loading AI backstory. Please check the console for details.');
+  }
+}
+
+// Call loadBackstory when the DOM is ready
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadBackstory();
+  if (recordBtn && downloadLink) {
+    recordBtn.addEventListener('mousedown', startRecording);
+    recordBtn.addEventListener('touchstart', startRecording);
+    recordBtn.addEventListener('mouseup', stopRecording);
+    recordBtn.addEventListener('mouseleave', stopRecording);
+    recordBtn.addEventListener('touchend', stopRecording);
+    recordBtn.addEventListener('touchcancel', stopRecording);
+
+    function startRecording(e: Event) {
+      e.preventDefault();
+      if (!micStream) {
+        alert('Microphone not available.');
+        return;
       }
-    };
-    mediaRecorder.onstop = async () => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') return;
+      audioChunks = [];
+      
+      // Set specific options for MediaRecorder
+      const options = { 
+        mimeType: 'audio/webm;codecs=opus',
+        audioBitsPerSecond: 128000
+      };
+      
       try {
-        if (!mediaRecorder) {
-          throw new Error('MediaRecorder is not initialized');
-        }
-        // Get the MIME type from the recorder
-        const mimeType = mediaRecorder.mimeType || 'audio/webm;codecs=opus';
-        console.log('MediaRecorder MIME type:', mimeType);
-        // Log the audio chunks we've collected
-        console.log(`Number of audio chunks: ${audioChunks.length}`);
-        console.log('Audio chunks:', audioChunks);
-        // Create blob for both download and transcription
-        const audioBlob = new Blob(audioChunks, { type: mimeType });
-        console.log(`Total audio blob size: ${audioBlob.size} bytes`);
-        // Convert recorded audio to mono, resample to 44100 Hz, and encode as WAV
-        aiService.setLanguage('en');
-        const arrayBuffer = await audioBlob.arrayBuffer();
-        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        const monoResampledBuffer = await downmixAndResampleToMono(audioBuffer, 44100);
-        const wavBlob = encodeWAV(monoResampledBuffer);
-        // Set up download link for WAV file
-        const wavDownloadUrl = URL.createObjectURL(wavBlob);
-        downloadLink!.href = wavDownloadUrl;
-        downloadLink!.download = 'recorded_audio.wav';
-        downloadLink!.style.display = 'block';
-        // Verify the blob content
-        const reader = new FileReader();
-        reader.onload = () => console.log('WAV audio data verification:', reader.result ? 'Data present' : 'No data');
-        reader.readAsArrayBuffer(wavBlob);
-        // Transcribe
-        const transcription = await aiService.transcribeAudio(wavBlob);
-        console.log('Transcription:', transcription);
-
-        // Send transcription to GPT
-        const gptResponse = await aiService.sendTranscriptionToGPT(transcription, {
-          model: "gpt-4o-mini", // Example: Add your desired model
-          backstory: "your AI backstory here", // Example: Add your AI backstory
-          temperature: 0.7, // Example: Add desired temperature
-          maxTokens: 150 // Example: Add desired max tokens
-        });
-        console.log('GPT Response:', gptResponse);
-
-        // Generate speech from GPT response using OpenAI TTS
-        const mp3Url = await aiService.generateTTSUsingOpenAI(gptResponse, 'alloy'); // You can change 'alloy' to another voice like 'shimmer', 'nova', etc.
-        console.log('Generated .mp3 URL from OpenAI:', mp3Url);
-
-        // Play the audio
-        if (mp3Url) {
-          const audio = new Audio(mp3Url);
-          audio.play();
-        }
-
-        // Display transcription with typewriter effect
-        const transcriptionContainer = document.getElementById('transcription-text');
-        if (transcriptionContainer) {
-          typewriterEffect(transcriptionContainer, transcription);
-        }
-      } catch (error) {
-        console.error('Failed to process audio:', error);
-        if (error instanceof Error) {
-          alert(`Error processing audio: ${error.message}`);
-        } else {
-          alert('Error processing audio. Please try again.');
-        }
+        mediaRecorder = new MediaRecorder(micStream, options);
+        console.log('MediaRecorder created with options:', options);
+      } catch (e) {
+        console.log('Failed to create MediaRecorder with these options, falling back to defaults');
+        mediaRecorder = new MediaRecorder(micStream);
       }
-    };
-    mediaRecorder.start();
-    recordBtn!.textContent = 'Recording...';
-    recordBtn!.style.background = '#d32f2f';
-  }
+      
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          console.log(`Received audio chunk of size: ${event.data.size} bytes`);
+          audioChunks.push(event.data);
+        }
+      };
+      mediaRecorder.onstop = async () => {
+        try {
+          if (!mediaRecorder) {
+            throw new Error('MediaRecorder is not initialized');
+          }
+          // Get the MIME type from the recorder
+          const mimeType = mediaRecorder.mimeType || 'audio/webm;codecs=opus';
+          console.log('MediaRecorder MIME type:', mimeType);
+          // Log the audio chunks we've collected
+          console.log(`Number of audio chunks: ${audioChunks.length}`);
+          console.log('Audio chunks:', audioChunks);
+          // Create blob for both download and transcription
+          const audioBlob = new Blob(audioChunks, { type: mimeType });
+          console.log(`Total audio blob size: ${audioBlob.size} bytes`);
+          // Convert recorded audio to mono, resample to 44100 Hz, and encode as WAV
+          aiService.setLanguage('en');
+          const arrayBuffer = await audioBlob.arrayBuffer();
+          const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+          const monoResampledBuffer = await downmixAndResampleToMono(audioBuffer, 44100);
+          const wavBlob = encodeWAV(monoResampledBuffer);
+          // Set up download link for WAV file
+          const wavDownloadUrl = URL.createObjectURL(wavBlob);
+          downloadLink!.href = wavDownloadUrl;
+          downloadLink!.download = 'recorded_audio.wav';
+          downloadLink!.style.display = 'block';
+          // Verify the blob content
+          const reader = new FileReader();
+          reader.onload = () => console.log('WAV audio data verification:', reader.result ? 'Data present' : 'No data');
+          reader.readAsArrayBuffer(wavBlob);
+          // Transcribe
+          const transcription = await aiService.transcribeAudio(wavBlob);
+          console.log('Transcription:', transcription);
 
-  function stopRecording(e: Event) {
-    e.preventDefault();
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-      mediaRecorder.stop();
-      recordBtn!.textContent = 'Hold to Record';
-      recordBtn!.style.background = '#ff5555';
+          // Send transcription to GPT
+          const gptResponse = await aiService.sendTranscriptionToGPT(transcription, {
+            model: "gpt-4o-mini", // Example: Add your desired model
+            backstory: aiBackstory, // Use the loaded backstory content
+            temperature: 0.9, // Example: Add desired temperature
+            maxTokens: 200 // Example: Add desired max tokens
+          });
+
+          // Only send to GPT if backstory is loaded to prevent errors
+          if (aiBackstory.length === 0) {
+            console.error('AI Backstory is empty. Skipping GPT transcription.');
+            alert('AI Backstory not loaded. Cannot process GPT request.');
+            return; // Stop execution if backstory is not loaded
+          }
+          console.log('GPT Response:', gptResponse);
+          console.log('Loaded backstory content length:', aiBackstory);
+
+          // Generate speech from GPT response using OpenAI TTS
+          const mp3Url = await aiService.generateTTSUsingOpenAI(gptResponse, 'alloy'); // You can change 'alloy' to another voice like 'shimmer', 'nova', etc.
+          console.log('Generated .mp3 URL from OpenAI:', mp3Url);
+
+          // Play the audio
+          if (mp3Url) {
+            lastAudioUrl = mp3Url; // Store the URL
+            const audio = new Audio(mp3Url);
+            try {
+              await audio.play();
+              if (playResponseBtn) {
+                playResponseBtn.style.display = 'none'; // Hide if autoplay successful
+              }
+            } catch (error) {
+              console.warn('Audio autoplay prevented, showing play button:', error);
+              if (playResponseBtn) {
+                playResponseBtn.style.display = 'block'; // Show play button
+                playResponseBtn.onclick = () => {
+                  new Audio(lastAudioUrl).play();
+                  playResponseBtn.style.display = 'none'; // Hide after manual play
+                };
+              }
+            }
+          }
+
+          // Display transcription with typewriter effect
+          const transcriptionContainer = document.getElementById('transcription-text');
+          if (transcriptionContainer) {
+            typewriterEffect(transcriptionContainer, transcription);
+          }
+        } catch (error) {
+          console.error('Failed to process audio:', error);
+          if (error instanceof Error) {
+            alert(`Error processing audio: ${error.message}`);
+          } else {
+            alert('Error processing audio. Please try again.');
+          }
+        }
+      };
+      mediaRecorder.start();
+      recordBtn!.textContent = 'Recording...';
+      recordBtn!.style.background = '#d32f2f';
+    }
+
+    function stopRecording(e: Event) {
+      e.preventDefault();
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        recordBtn!.textContent = 'Hold to Record';
+        recordBtn!.style.background = '#ff5555';
+      }
     }
   }
-}
+});

@@ -273,6 +273,8 @@ class AIService {
         ...options
       };
 
+      console.log('GPT Request Payload:', gptRequestPayload); // Add this line to inspect the payload
+
       const response = await fetch(gptUrl, {
         method: 'POST',
         headers: {

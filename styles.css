@@ -122,8 +122,9 @@
 
 /* Controls: compact, elegant, docked near bottom */
 #record-btn,
-#download-link {
-  position: relative; /* Keep relative within controls-container */
+#download-link,
+#play-response-btn {
+  position: relative;
   left: auto;
   transform: none;
   z-index: 10;
@@ -144,6 +145,12 @@
   background: #4CAF50;
   color: #fff;
   text-decoration: none;
+}
+
+#play-response-btn {
+  background: #007bff;
+  color: #fff;
+  display: none; /* Initially hidden */
 }
 
 @media (min-width: 480px) {
