@@ -297,6 +297,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           if (mp3Url) {
             lastAudioUrl = mp3Url; // Store the URL
             const audio = new Audio(mp3Url);
+            audio.volume = 1.0; // Set volume to maximum
             try {
               await audio.play();
               if (playResponseBtn) {
@@ -307,7 +308,9 @@ window.addEventListener('DOMContentLoaded', async () => {
               if (playResponseBtn) {
                 playResponseBtn.style.display = 'block'; // Show play button
                 playResponseBtn.onclick = () => {
-                  new Audio(lastAudioUrl).play();
+                  const manualAudio = new Audio(lastAudioUrl);
+                  manualAudio.volume = 1.0; // Set volume to maximum for manual play
+                  manualAudio.play();
                   playResponseBtn.style.display = 'none'; // Hide after manual play
                 };
               }
