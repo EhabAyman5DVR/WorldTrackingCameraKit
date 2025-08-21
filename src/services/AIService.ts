@@ -205,51 +205,6 @@ class AIService {
     }
   }
 
-  async getGPTResponse(text: string): Promise<string> {
-    try {
-      if (!this.isTokenValid()) {
-        throw new APIError('Not authenticated', 401);
-      }
-
-      const response = await fetch(`${this.BASE_URL}/chat`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.token}`
-        },
-        body: JSON.stringify({ text })
-      });
-
-      const data = await this.handleResponse<{ response: string }>(response);
-      return data.response;
-    } catch (error) {
-      console.error('GPT error:', error);
-      throw error;
-    }
-  }
-
-  async generateSpeech(text: string): Promise<AIResponse> {
-    try {
-      if (!this.isTokenValid()) {
-        throw new APIError('Not authenticated', 401);
-      }
-
-      const response = await fetch(`${this.BASE_URL}/tts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.token}`
-        },
-        body: JSON.stringify({ text })
-      });
-
-      return await this.handleResponse<AIResponse>(response);
-    } catch (error) {
-      console.error('TTS error:', error);
-      throw error;
-    }
-  }
-
   async sendTranscriptionToGPT(
     transcription: string,
     options?: {
@@ -261,7 +216,7 @@ class AIService {
   ): Promise<string> {
     try {
       if (!this.isTokenValid()) {
-        throw  new APIError('Not authenticated', 401);
+        throw new APIError('Not authenticated', 401);
       }
 
       const gptUrl = `${this.BASE_URL}/gpt`;
@@ -300,27 +255,6 @@ class AIService {
     }
   }
 
-  // Main method to process audio and get complete response
-  async processAudioMessage(audioBlob: Blob): Promise<AIResponse> {
-    try {
-      // 1. Convert audio to text
-      const transcribedText = await this.transcribeAudio(audioBlob);
-      console.log('Transcribed text:', transcribedText);
-
-      // 2. Get GPT response
-      const gptResponse = await this.getGPTResponse(transcribedText);
-      console.log('GPT response:', gptResponse);
-
-      // 3. Generate speech and visemes
-      const aiResponse = await this.generateSpeech(gptResponse);
-      console.log('Generated speech and visemes:', aiResponse);
-
-      return aiResponse;
-    } catch (error) {
-      console.error('Processing error:', error);
-      throw error;
-    }
-  }
 }
 
 // Custom error class for API errors
