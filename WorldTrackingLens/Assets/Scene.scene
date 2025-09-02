@@ -6,6 +6,7 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> 22332431-8fc6-4e4e-9429-e15a70f8cf40
     - !<own> fd1d3664-c236-47eb-bc19-d3420e258a0f
+    - !<own> 4dc68069-05cb-482e-8198-404edd61bf84
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -516,6 +517,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> ac3148d7-710c-476c-ac40-b9dc472137c7
+    - !<own> 8b7ebaaa-e0e5-46ab-8dbd-59c3c2dd3f50
   Components:
     - !<own> e0f0f907-dacf-424f-ba53-f072c6cba360
     - !<own> 6d4daa86-692a-4893-9772-e1f15396d4e5
@@ -817,6 +819,21 @@
     []
   Components:
     []
+- !<SceneObject/4dc68069-05cb-482e-8198-404edd61bf84>
+  PrefabRemaps:
+    []
+  Name: lip-sync-trigger API
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e8769965-21be-4a75-9622-5f888b1bd69e
 - !<SceneObject/4f9e1c1e-8d01-40cb-a907-c2194e4f39be>
   PrefabRemaps:
     []
@@ -1336,6 +1353,22 @@
     - !<own> 8d229b42-649d-4707-9b47-809f10d4d4bc
   Components:
     []
+- !<SceneObject/8b7ebaaa-e0e5-46ab-8dbd-59c3c2dd3f50>
+  PrefabRemaps:
+    []
+  Name: Screen Image
+  Enabled: true
+  Layers: 1048576
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9487e277-d9ed-46c4-8041-187647d3862f
+    - !<own> a6f2607a-8804-4dbc-908e-3c3b6cae1ff7
 - !<SceneObject/8c4496ff-04f7-4197-b5db-fac2ea2996de>
   PrefabRemaps:
     []
@@ -1465,6 +1498,39 @@
     - !<own> 3ad96342-ad80-4cef-88a6-b1047d3d0196
   Components:
     []
+- !<ScreenTransform/9487e277-d9ed-46c4-8041-187647d3862f>
+  PrefabRemaps:
+    []
+  Name: Screen Transform
+  Enabled: true
+  IsAdvanced: false
+  Constraints:
+    pinToLeft: false
+    pinToTop: false
+    pinToRight: false
+    pinToBottom: false
+    fixedWidth: false
+    fixedHeight: false
+    deactivatedFixedSprite: false
+    deactivatedFixedPivot: false
+  Pivot: {x: 0.000000, y: 0.000000}
+  Transform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  RawMode: true
+  ForceBasic: true
+  Anchor:
+    left: -1.000000
+    bottom: -1.000000
+    right: 1.000000
+    top: 1.000000
+  Offset:
+    left: 0.000000
+    bottom: 0.000000
+    right: 0.000000
+    top: 0.000000
 - !<SceneObject/94dad212-7be7-4445-8696-94f34512f4be>
   PrefabRemaps:
     []
@@ -1723,6 +1789,25 @@
     - !<own> c61326af-e4e5-4274-a1ad-7922f02e5e2c
   Components:
     []
+- !<Image/a6f2607a-8804-4dbc-908e-3c3b6cae1ff7>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 77750d67-a56f-4348-96bd-a13ff5dba7c4
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<RenderMeshVisual/a6fd4e08-fc0a-42dc-a8cf-f6bb23b1ea09>
   PrefabRemaps:
     []
@@ -2234,6 +2319,22 @@
   ScriptInputs:
     "":
       printDebugLog: false
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/e8769965-21be-4a75-9622-5f888b1bd69e>
+  PrefabRemaps:
+    []
+  Name: lip-sync-trigger API
+  Enabled: true
+  ScriptAsset: !<reference> e82af08d-5854-4f9d-8345-66543cd70130
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      remoteServiceModule: !<reference.RemoteServiceModule> fb25b88c-b6b0-4835-9e07-eb9bcbe2bf20
   ScriptTypes:
     "":
       {}

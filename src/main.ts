@@ -31,8 +31,8 @@ async function init() {
   liveRenderTarget.classList.remove('fullscreen');
 
   await setCameraKitSource(currentSession);
-const loginResponse = await aiService.login('developer@5d-vr.com', 'Dev$&PassAI2654');
-        console.log(loginResponse)
+  const loginResponse = await aiService.login('developer@5d-vr.com', 'Dev$&PassAI2654');
+  console.log(loginResponse)
 }
 
 async function setCameraKitSource(
@@ -209,6 +209,12 @@ async function loadBackstory() {
 
 // Call loadBackstory when the DOM is ready
 window.addEventListener('DOMContentLoaded', async () => {
+  fetch("https://lip-sync-trigger.vercel.app/api/lip-sync-trigger", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ trigger: true, duration: 3.2 }),
+  })
+  
   await loadBackstory();
   if (recordBtn && playResponseBtn) {
     recordBtn.addEventListener('mousedown', startRecording);
@@ -226,13 +232,13 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
       if (mediaRecorder && mediaRecorder.state === 'recording') return;
       audioChunks = [];
-      
+
       // Set specific options for MediaRecorder
-      const options = { 
+      const options = {
         mimeType: 'audio/webm;codecs=opus',
         audioBitsPerSecond: 128000
       };
-      
+
       try {
         mediaRecorder = new MediaRecorder(micStream, options);
         console.log('MediaRecorder created with options:', options);
@@ -240,7 +246,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         console.log('Failed to create MediaRecorder with these options, falling back to defaults');
         mediaRecorder = new MediaRecorder(micStream);
       }
-      
+
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
           console.log(`Received audio chunk of size: ${event.data.size} bytes`);
@@ -295,6 +301,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 
           // Play the audio
           if (mp3Url) {
+            fetch("https://lip-sync-trigger.vercel.app/api/lip-sync-trigger", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ trigger: true, duration: 3.2 }),
+            })
             lastAudioUrl = mp3Url; // Store the URL
             const audio = new Audio(mp3Url);
             audio.volume = 1.0; // Set volume to maximum

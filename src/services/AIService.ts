@@ -177,7 +177,7 @@ class AIService {
       if (!response.ok) {
         throw new APIError(mp3Url || `HTTP error! status: ${response.status}`, response.status);
       }
-      
+
       return mp3Url.trim().replace(/"/g, ''); // Clean up URL from potential quotes
     } catch (error) {
       console.error('OpenAI TTS error:', error);
@@ -187,6 +187,14 @@ class AIService {
         throw new APIError(`Failed to process OpenAI TTS request: ${(error as Error).message}`, 500);
       }
     }
+  }
+
+  async LipSyncTrigger() {
+    await fetch("https://lip-sync-trigger.vercel.app/api/lip-sync-trigger", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ trigger: true, duration: 3.2 }),
+    });
   }
 
   async transcribeAudio(audioBlob: Blob): Promise<string> {
