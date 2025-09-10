@@ -16,7 +16,7 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
-    "@snap/camera-kit": "^1.8.0",
+    "@snap/camera-kit": "^1.9.0",
     "rollup": "^4.44.0"
   }
 }
